@@ -1,0 +1,43 @@
+import os
+from dotenv import load_dotenv
+import requests
+
+# Load environment variables from .env file
+load_dotenv()
+
+def direct_convert_currency(from_currency, to_currency, amount):
+    url = "https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert"
+    querystring = {"from": from_currency, "to": to_currency, "amount": str(amount)}
+    headers = {
+        "X-RapidAPI-Key": os.getenv("Anotherapi_key"),
+        "X-RapidAPI-Host": "currency-conversion-and-exchange-rates.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Status Code:", response.status_code)
+        print("Response Content:", response.text)
+        return "Error: Unable to perform conversion"
+
+def main():
+    # Prompt the user for input
+    from_currency = input("Enter the currency you want to convert from (e.g., GBP, USD): ")
+    to_currency = input("Enter the currency you want to convert to (e.g., EUR, JPY): ")
+    amount = input("Enter the amount you want to convert: ")
+
+    # Convert the amount to a number
+    try:
+        amount = float(amount)
+    except ValueError:
+        print("Invalid amount entered. Please enter a numeric value.")
+        return
+
+    # Perform the currency conversion
+    conversion_result = direct_convert_currency(from_currency, to_currency, amount)
+    print(conversion_result)
+
+if __name__ == "__main__":
+    main()
+
