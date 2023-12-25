@@ -16,7 +16,7 @@ This Python-based project leverages the Principal APIs to provide real-time curr
   
 
 ### Installation
-1. Clone the repository:git@github.com:Omer1471/CurrencyExchange.git
+1. Clone the repository
 2. cd currency-exchange
 
 
